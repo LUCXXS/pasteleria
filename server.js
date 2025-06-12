@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt'); //incriptar contraseñas
 //Crear una instancia de la app express 
 const app = express();
 //Definir el puerto donde se ejecutará el servidor
-const PORT =3000;
+const PORT = process.env.PORT || 3000; //usa el puerto que asigne railway o local 3000
 
 //habilitar cors para permitir peticiones
 app.use(cors());
@@ -20,15 +20,15 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 //conexion a mongoDB
-mongoose.connect('mongodb://localhost:27017/pasteleria',{ 
+mongoose.connect(process.env.MONGODB_URI,{ 
     useNewUrlParser: true, //usa el parser del url
     useUnifiedTopology: true //motor de monitoreo 
 })
 
 //si la conexion es exitosa , muestra mensaje 
-.then(() => console.log('Conexión exitosa a MongoDB'))
+.then(() => console.log('CONECTADO A MONGODB ATLAS'))
 //si hay un error en la conexion, muestra mensaje
-.catch(err => console.error(err));
+.catch(err => console.error('ERROR DE CONEXIÓN:', err));
 
 //esquemas y modelos 
 
